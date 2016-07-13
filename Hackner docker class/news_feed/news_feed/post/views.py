@@ -34,6 +34,10 @@ class CreatePostView(View):
             subreddit = get_object_or_404(Subreddit, id=subreddit_scope)
 
         # STUDENT TODO | Create post from parameters
+        title=input_data['title']    
+        content=input_data['content']
+        model=Post(title=title, content=content, subreddit=subreddit)
+        model.save()
 
         return JsonResponse(status=200, data={'status': 'OK'}, safe=False)
 
@@ -61,6 +65,8 @@ class ListPostView(View):
                 # STUDENT TODO | Return title and content as well
                 'posts': [
                     {
+                        'content': post.content,
+                        'title': post.title,
                         'id': post.id,
                         'created': post.created,
                     } for post in posts
