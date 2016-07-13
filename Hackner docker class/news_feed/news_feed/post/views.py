@@ -34,7 +34,11 @@ class CreatePostView(View):
             subreddit = get_object_or_404(Subreddit, id=subreddit_scope)
 
         # STUDENT TODO | Create post from parameters
-        title=input_data['title']    
+        title=input_data['title']  
+
+        if title.upper() == 'BAD':
+            return JsonResponse(status=400, data={'status': 'Invalid parameter'}, safe=False)
+        
         content=input_data['content']
         model=Post(title=title, content=content, subreddit=subreddit)
         model.save()
