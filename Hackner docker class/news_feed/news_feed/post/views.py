@@ -58,18 +58,14 @@ class ListPostView(View):
         else:
             posts = Post.objects.filter(subreddit__id=subreddit_scope)
 
+        list=[{'content': post.content,'title': post.title,'id': post.id,'created': post.created,} for post in posts]
+        list.reverse()
+        
         return JsonResponse(
             status=200,
             data={
                 'status': 'OK',
                 # STUDENT TODO | Return title and content as well
-                'posts': [
-                    {
-                        'content': post.content,
-                        'title': post.title,
-                        'id': post.id,
-                        'created': post.created,
-                    } for post in posts
-                ]
+                'posts': list
             }
         )
