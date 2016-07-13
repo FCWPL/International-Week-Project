@@ -27,6 +27,10 @@ class CreateSubredditView(View):
             return JsonResponse(status=400, data={'status': 'Missing parameter'}, safe=False)
 
         # STUDENT TODO | Create subreddit from parameters
+        title=input_data['title']
+        description=input_data['description']
+        model=Subreddit(title=title, description=description)
+        model.save()
 
         return JsonResponse(status=200, data={'status': 'OK'}, safe=False)
 
@@ -48,6 +52,8 @@ class ListSubredditView(View):
                 # STUDENT TODO | Return title and description as well
                 'subreddits': [
                     {
+                        'title': subreddit.title,
+                        'description': subreddit.description,
                         'id': subreddit.id,
                         'created': subreddit.created,
                     } for subreddit in Subreddit.objects.all()
